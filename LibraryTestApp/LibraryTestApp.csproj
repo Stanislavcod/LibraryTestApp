@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Library.BusinessLogic\Library.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Library.Model\Library.Model.csproj" />
   </ItemGroup>
 
 </Project>
