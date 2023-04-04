@@ -30,7 +30,7 @@ namespace Library.BusinessLogic.Services.Implementations
             }
         }
 
-        public IEnumerable<Book> Get()
+        public IEnumerable<Book> GetAll()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Library.BusinessLogic.Services.Implementations
             }
         }
 
-        public Book Get(string name)
+        public Book GetByName(string name)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Library.BusinessLogic.Services.Implementations
             }
         }
 
-        public Book Get(int id)
+        public Book GetById(int id)
         {
             try
             {

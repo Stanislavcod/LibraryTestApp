@@ -2,6 +2,8 @@
 using Library.Model.DatabaseContext;
 using Library.BusinessLogic.Services.Contracts;
 using Library.BusinessLogic.Services.Implementations;
+using Serilog;
+using System.Reflection;
 
 namespace LibraryTestApp.Configuration
 {
@@ -14,8 +16,8 @@ namespace LibraryTestApp.Configuration
             services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(connection,
                 opt => opt.MigrationsAssembly("StudentAccounting")));
 
+
             services
-                .AddTransient<IUserService, UserService>()
                 .AddTransient<IBookService, BookService>();
         }
         public static void Configure(WebApplication app)
