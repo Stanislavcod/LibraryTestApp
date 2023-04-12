@@ -9,5 +9,6 @@ namespace Library.Model.Models
         public string Genre { get; set;} = string.Empty;
         public DateTime Release { get; set; }
         public byte[] Photo { get; set; }
+        public List<User> Users { get; set; } = new();
     }
 }
