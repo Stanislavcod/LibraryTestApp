@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Library.Model.DatabaseContext;
-using Library.BusinessLogic.Services.Contracts;
+﻿using Library.BusinessLogic.Services.Contracts;
 using Library.BusinessLogic.Services.Implementations;
-using Serilog;
-using System.Reflection;
+using Library.Model.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 
-namespace LibraryTestApp.Configuration
+namespace LibraryTestApp.ConfigurationHelper
 {
     public static class ConfigurationHelper
     {
@@ -13,9 +11,8 @@ namespace LibraryTestApp.Configuration
         {
             string connection = configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(connection,
-                opt => opt.MigrationsAssembly("StudentAccounting")));
-
+            services.AddDbContext<ApplicationDatabaseContext>(options =>
+    options.UseSqlServer(connection ?? throw new InvalidOperationException("Connection string 'LibraryTestAppContext' not found.")));
 
             services
                 .AddTransient<IBookService, BookService>();
@@ -38,7 +35,7 @@ namespace LibraryTestApp.Configuration
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Book}/{action=Index}/{id?}");
         }
     }
 }

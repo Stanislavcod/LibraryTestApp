@@ -1,16 +1,16 @@
-﻿
-using Library.Model.Models;
+﻿using Library.Model.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Model.DatabaseContext
 {
     public class ApplicationDatabaseContext : DbContext
     {
-        public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : base(options)
+        public ApplicationDatabaseContext (DbContextOptions<ApplicationDatabaseContext> options) 
+            : base(options)
         {
             Database.EnsureCreated();
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Book> Books { get; set; }
+
+        public DbSet<Book> Book { get; set; } = default!;
     }
 }

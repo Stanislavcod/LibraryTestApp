@@ -21,7 +21,7 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                _context.Books.Add(book);
+                _context.Book.Add(book);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var customers = _context.Books.AsNoTracking().ToList();
+                var customers = _context.Book.AsNoTracking().ToList();
 
                 return customers;
             }
@@ -49,7 +49,7 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var book = _context.Books.AsNoTracking().FirstOrDefault(book => book.Name == name);
+                var book = _context.Book.AsNoTracking().FirstOrDefault(book => book.Name == name);
 
                 if (book == null)   
                 {
@@ -69,7 +69,7 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var book = _context.Books.AsNoTracking().FirstOrDefault(book => book.Id == id);
+                var book = _context.Book.AsNoTracking().FirstOrDefault(book => book.Id == id);
 
                 if (book == null)
                 {
@@ -90,7 +90,7 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                _context.Books.Update(book);
+                _context.Book.Update(book);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -103,14 +103,14 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var book = _context.Books.FirstOrDefault(book => book.Id == id);
+                var book = _context.Book.FirstOrDefault(book => book.Id == id);
 
                 if (book == null)
                 {
                     throw new Exception("Книга не найдена");
                 }
 
-                _context.Books.Remove(book);
+                _context.Book.Remove(book);
                 _context.SaveChanges();
             }
             catch (Exception ex)

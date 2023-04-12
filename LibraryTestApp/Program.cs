@@ -1,4 +1,4 @@
-using LibraryTestApp.Configuration;
+using LibraryTestApp.ConfigurationHelper;
 using Serilog;
 using System.Reflection;
 

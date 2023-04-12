@@ -2,12 +2,9 @@
 using Library.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace LibraryTestApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BookController : ControllerBase
+    public class BookController : Controller
     {
         private readonly IBookService _bookService;
 
@@ -15,8 +12,12 @@ namespace LibraryTestApp.Controllers
         {
             _bookService = bookService;
         }
+        [HttpGet]
+        public IActionResult Index() 
+        {
+            return View();
+        }
 
-        [Route("GetAll")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -32,7 +33,6 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [Route("GetById")]
         [HttpPost]
         public ActionResult GetById(int id)
         {
@@ -48,7 +48,6 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [Route("CreateBook")]
         [HttpPost]
         public ActionResult CreateBook(Book book)
         {
@@ -64,7 +63,6 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [Route("EditBook")]
         [HttpPut]
         public ActionResult EditBook(Book book)
         {
@@ -80,7 +78,6 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [Route("DeleteBook")]
         [HttpDelete()]
         public ActionResult Delete(int id)
         {
