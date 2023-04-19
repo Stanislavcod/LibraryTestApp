@@ -1,6 +1,7 @@
 ﻿using Library.BusinessLogic.Services.Contracts;
 using Library.BusinessLogic.Services.Implementations;
 using Library.Model.DatabaseContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryTestApp.ConfigurationHelper
@@ -14,16 +15,15 @@ namespace LibraryTestApp.ConfigurationHelper
             services.AddDbContext<ApplicationDatabaseContext>(options =>
             options.UseSqlServer(connection ?? throw new InvalidOperationException("Connection string 'LibraryTestAppContext' not found.")));
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+     .AddCookie(options => options.LoginPath = "/login");
+
+            services.AddAuthorization();
+
             services
                 .AddTransient<IBookService, BookService>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IAuthService, AuthService>();
-
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = "MySessionCookie";
-                options.IdleTimeout = TimeSpan.FromSeconds(3600);
-            });
         }
         public static void Configure(WebApplication app)
         {
@@ -39,6 +39,7 @@ namespace LibraryTestApp.ConfigurationHelper
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

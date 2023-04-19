@@ -7,7 +7,7 @@ namespace Library.BusinessLogic.Services.Contracts
     {
         void Create(Book book, Stream fileStream);
         IEnumerable<Book> GetAll();
-        IEnumerable<Book> GetByUser(int id);
+        IEnumerable<Book> GetByUser(string userName);
         Book GetByName(string name);
         Book GetById(int id);
         void Edit(Book book, Stream fileStream);

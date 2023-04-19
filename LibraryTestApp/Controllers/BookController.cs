@@ -13,19 +13,19 @@ namespace LibraryTestApp.Controllers
             _bookService = bookService;
         }
         [HttpGet]
-        public IActionResult Index() 
+        public IActionResult Index()
         {
             return View(_bookService.GetAll());
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public IActionResult UserBook()
         {
             try
             {
-                var books = _bookService.GetAll();
+                var books = _bookService.GetByUser(User.Identity.Name);
 
-                return Ok(books);
+                return View(books);
             }
             catch
             {
@@ -34,24 +34,8 @@ namespace LibraryTestApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetById(int id)
+        public ActionResult CreateBook([FromForm] Book book)
         {
-            try
-            {
-                var book = _bookService.GetById(id);
-
-                return Ok(book);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        public ActionResult CreateBook(Book book)
-        {
-
             try
             {
                 var file = Request.Form.Files.FirstOrDefault();
@@ -60,16 +44,16 @@ namespace LibraryTestApp.Controllers
                     _bookService.Create(book, fileStream);
                 }
 
-                return Ok();
+                return RedirectToAction("Index", "Books");
             }
-            catch 
+            catch
             {
                 return BadRequest();
             }
         }
 
         [HttpPut]
-        public ActionResult EditBook(Book book)
+        public ActionResult EditBook([FromForm] Book book)
         {
             try
             {
@@ -78,8 +62,9 @@ namespace LibraryTestApp.Controllers
                 {
                     _bookService.Edit(book, fileStream);
                 }
-
-                return Ok();
+                return HttpContext.Request.Headers["Referer"].ToString().Contains("Index") ?
+        RedirectToAction("Index", "Books") :
+        Redirect(HttpContext.Request.Headers["Referer"].ToString());
             }
             catch
             {
@@ -88,13 +73,15 @@ namespace LibraryTestApp.Controllers
         }
 
         [HttpDelete()]
-        public ActionResult Delete(int id)
+        public ActionResult Delete([FromForm]int id)
         {
             try
             {
                 _bookService.Delete(id);
 
-                return Ok();
+                return HttpContext.Request.Headers["Referer"].ToString().Contains("Index") ?
+        RedirectToAction("Index", "Books") :
+        Redirect(HttpContext.Request.Headers["Referer"].ToString());
             }
             catch
             {

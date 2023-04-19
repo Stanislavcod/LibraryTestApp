@@ -54,11 +54,11 @@ namespace Library.BusinessLogic.Services.Implementations
                 return new List<Book>();
             }
         }
-        public IEnumerable<Book> GetByUser(int userId)
+        public IEnumerable<Book> GetByUser(string userName)
         {
             try
             {
-                var books = _context.Book.AsNoTracking().Where(x => x.Users.Where(x => x.Id == userId) != null);
+                var books = _context.Book.AsNoTracking().Where(x => x.Users.Where(x => x.Login == userName) != null);
 
                 return books;
             }
