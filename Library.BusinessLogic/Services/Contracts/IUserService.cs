@@ -5,13 +5,10 @@ namespace Library.BusinessLogic.Services.Contracts
 {
     public interface IUserService
     {
-        void Create(User user);
-        IEnumerable<UserDto> Get();
-        User Get(string name);
-        User Get(int id);
-        void EditPassword(EditPasswordUserDto editPasswordUserDto);
-        void ForgotPassword(string login);
-        void Edit(User user);
+        IEnumerable<User> Get();
+        User Get(string Login);
+        void EditPassword(User user, string password, string newPassword);
+        void Edit(UserDto user, string password);
         void Delete(int id);
     }
 }

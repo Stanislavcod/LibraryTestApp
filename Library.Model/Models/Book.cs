@@ -1,5 +1,4 @@
-﻿
-namespace Library.Model.Models
+﻿namespace Library.Model.Models
 {
     public class Book
     {
@@ -8,7 +7,7 @@ namespace Library.Model.Models
         public string Author { get; set; } = string.Empty;
         public string Genre { get; set;} = string.Empty;
         public DateTime Release { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[]? Photo { get; set; }
         public List<User> Users { get; set; } = new();
     }
 }

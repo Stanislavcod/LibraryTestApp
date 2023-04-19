@@ -1,0 +1,35 @@
+﻿@using Library.Common.ModelsDto
+@model UserDto
+
+<div style="display: flex; justify-content: center;">
+    <h1>Регистрация</h1>
+</div>
+
+@{
+    ViewData["Title"] = "Библиотека";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="display: flex; justify-content: center;">
+    <form method="post" asp-controller="Auth" asp-action="register">
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" class="form-control" id="username" name="username" maxlength="20" style="width:300px;">
+        </div>
+        <div class="form-group">
+            <label for="username">Почта:</label>
+            <input type="text" class="form-control" id="username" name="email" maxlength="30" style="width:300px;">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" class="form-control" id="password" name="password" style="width:300px;">
+        </div>
+        <div class="form-group">
+            <label for="password">Повторите пароль:</label>
+            <input type="password" class="form-control" id="password" name="confirmPassword" style="width:300px;">
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </div>
+    </form>
+</div>

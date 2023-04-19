@@ -12,10 +12,18 @@ namespace LibraryTestApp.ConfigurationHelper
             string connection = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDatabaseContext>(options =>
-    options.UseSqlServer(connection ?? throw new InvalidOperationException("Connection string 'LibraryTestAppContext' not found.")));
+            options.UseSqlServer(connection ?? throw new InvalidOperationException("Connection string 'LibraryTestAppContext' not found.")));
 
             services
-                .AddTransient<IBookService, BookService>();
+                .AddTransient<IBookService, BookService>()
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<IAuthService, AuthService>();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "MySessionCookie";
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            });
         }
         public static void Configure(WebApplication app)
         {

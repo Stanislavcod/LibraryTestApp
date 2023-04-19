@@ -8,6 +8,5 @@ namespace Library.Model.Models
         public int Id { get; set; }
         public RoleType Name { get; set; }
         public string NormalName { get; set; } = string.Empty;
-        public List<User>? Users { get; set; }
     }
 }

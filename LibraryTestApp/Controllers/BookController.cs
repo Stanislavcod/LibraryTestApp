@@ -15,7 +15,7 @@ namespace LibraryTestApp.Controllers
         [HttpGet]
         public IActionResult Index() 
         {
-            return View();
+            return View(_bookService.GetAll());
         }
 
         [HttpGet]
@@ -51,9 +51,14 @@ namespace LibraryTestApp.Controllers
         [HttpPost]
         public ActionResult CreateBook(Book book)
         {
+
             try
             {
-                _bookService.Create(book);
+                var file = Request.Form.Files.FirstOrDefault();
+                using (var fileStream = file.OpenReadStream())
+                {
+                    _bookService.Create(book, fileStream);
+                }
 
                 return Ok();
             }
@@ -68,7 +73,11 @@ namespace LibraryTestApp.Controllers
         {
             try
             {
-                _bookService.Edit(book);
+                var file = Request.Form.Files.FirstOrDefault();
+                using (var fileStream = file.OpenReadStream())
+                {
+                    _bookService.Edit(book, fileStream);
+                }
 
                 return Ok();
             }

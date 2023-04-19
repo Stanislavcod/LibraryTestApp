@@ -17,10 +17,19 @@ namespace Library.BusinessLogic.Services.Implementations
             _context = context;
         }
 
-        public void Create(Book book)
+        public void Create(Book book, Stream fileStream)
         {
             try
             {
+                if (fileStream != null && fileStream.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        fileStream.CopyToAsync(memoryStream);
+                        book.Photo = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Book.Add(book);
                 _context.SaveChanges();
             }
@@ -34,17 +43,32 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var customers = _context.Book.AsNoTracking().ToList();
+                var books = _context.Book.AsNoTracking().ToList();
 
-                return customers;
+                return books;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
+
                 return new List<Book>();
             }
         }
+        public IEnumerable<Book> GetByUser(int userId)
+        {
+            try
+            {
+                var books = _context.Book.AsNoTracking().Where(x => x.Users.Where(x => x.Id == userId) != null);
 
+                return books;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"{DateTime.Now}: {ex.Message}");
+
+                return new List<Book>();
+            }
+        }
         public Book GetByName(string name)
         {
             try
@@ -52,9 +76,7 @@ namespace Library.BusinessLogic.Services.Implementations
                 var book = _context.Book.AsNoTracking().FirstOrDefault(book => book.Name == name);
 
                 if (book == null)   
-                {
                     throw new Exception("Книга не найдена");
-                }
 
                 return book;
             }
@@ -72,9 +94,7 @@ namespace Library.BusinessLogic.Services.Implementations
                 var book = _context.Book.AsNoTracking().FirstOrDefault(book => book.Id == id);
 
                 if (book == null)
-                {
                     throw new Exception("Книга не найдена");
-                }
 
                 return book;
             }
@@ -86,10 +106,24 @@ namespace Library.BusinessLogic.Services.Implementations
             }
         }
 
-        public void Edit(Book book)
+        public void Edit(Book book, Stream fileStream)
         {
             try
             {
+                var currentbook = _context.Book.Find(book.Id);
+
+                if(currentbook == null)
+                    throw new Exception("Книга не найдена");
+
+                if (fileStream != null && fileStream.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        fileStream.CopyToAsync(memoryStream);
+                        book.Photo = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Book.Update(book);
                 _context.SaveChanges();
             }
@@ -106,11 +140,10 @@ namespace Library.BusinessLogic.Services.Implementations
                 var book = _context.Book.FirstOrDefault(book => book.Id == id);
 
                 if (book == null)
-                {
                     throw new Exception("Книга не найдена");
-                }
-
+                
                 _context.Book.Remove(book);
+
                 _context.SaveChanges();
             }
             catch (Exception ex)
