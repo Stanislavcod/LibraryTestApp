@@ -54,11 +54,11 @@ namespace Library.BusinessLogic.Services.Implementations
                 return new List<Book>();
             }
         }
-        public IEnumerable<Book> GetByUser(string userName)
+        public IEnumerable<Book> GetUserBook(string userName)
         {
             try
             {
-                var books = _context.Book.AsNoTracking().Where(x => x.Users.Where(x => x.Login == userName) != null);
+                var books = _context.Book.AsNoTracking().Where(x => x.User.Login == userName).ToList();
 
                 return books;
             }
@@ -67,6 +67,19 @@ namespace Library.BusinessLogic.Services.Implementations
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
 
                 return new List<Book>();
+            }
+        }
+        public void AddUserBook(int bookId, int userId)
+        {
+            try
+            {
+                var book = _context.Book.Find(bookId);
+                book.UserId = userId;
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{DateTime.Now}: {ex.Message}");
             }
         }
         public Book GetByName(string name)

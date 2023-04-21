@@ -15,7 +15,6 @@ namespace LibraryTestApp.Controllers
         {
             _authService = authService;
             _httpContextAccessor = httpContextAccessor;
-
         }
         [HttpGet("register")]
         public IActionResult Register()
@@ -33,7 +32,7 @@ namespace LibraryTestApp.Controllers
         {
             return View();
         }
-        [HttpGet("login")]
+        [HttpPost("login")]
         public IActionResult Login([FromForm] UserDto request)
         {
             var httpContext = _httpContextAccessor.HttpContext;
@@ -43,7 +42,8 @@ namespace LibraryTestApp.Controllers
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
             httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            return RedirectToAction("Index", "Books");
+
+            return RedirectToAction("Index", "Book");
         }
         [HttpGet("logout")]
         public IActionResult Logout()

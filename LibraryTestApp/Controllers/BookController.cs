@@ -1,5 +1,7 @@
 ﻿using Library.BusinessLogic.Services.Contracts;
+using Library.BusinessLogic.Services.Implementations;
 using Library.Model.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryTestApp.Controllers
@@ -7,10 +9,12 @@ namespace LibraryTestApp.Controllers
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IUserService _userService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IUserService userService)
         {
             _bookService = bookService;
+            _userService = userService;
         }
         [HttpGet]
         public IActionResult Index()
@@ -23,7 +27,7 @@ namespace LibraryTestApp.Controllers
         {
             try
             {
-                var books = _bookService.GetByUser(User.Identity.Name);
+                var books = _bookService.GetUserBook(User.Identity.Name);
 
                 return View(books);
             }
@@ -70,6 +74,15 @@ namespace LibraryTestApp.Controllers
             {
                 return BadRequest();
             }
+        }
+        [HttpPost]
+        public IActionResult AddUserBook(int bookId)
+        {
+            var user = _userService.Get(User.Identity.Name);
+
+            _bookService.AddUserBook(bookId, user.Id);
+
+            return RedirectToAction("UserBook");
         }
 
         [HttpDelete()]

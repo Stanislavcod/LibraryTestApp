@@ -1,0 +1,28 @@
+﻿@using Library.Model.Models
+@model List<Book>
+
+@{
+    ViewData["Title"] = "Библиотека";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-4">
+    <h1 class="text-center">Мои книги</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            @foreach (var book in Model)
+            {
+                <div class="card">
+                    <img src="@((book.Photo != null) ? Url.Content($"~/{book.Photo}") : Url.Content("~/images/stack-of-books-in-ho.jpg"))" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Название: @book.Name</h5>
+                        <p class="card-text">Автор: @book.Author </p>
+                        <p class="card-text">Жанр: @book.Genre</p>
+                        <p class="card-text">Дата: @book.Release.Date</p>
+                        <a href="#" class="btn btn-primary">Удалить</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

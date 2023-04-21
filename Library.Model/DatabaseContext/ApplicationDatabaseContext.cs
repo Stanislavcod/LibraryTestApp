@@ -10,6 +10,7 @@ namespace Library.Model.DatabaseContext
         public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
