@@ -21,7 +21,6 @@ namespace LibraryTestApp.Controllers
         {
             return View(_bookService.GetAll());
         }
-
         [HttpGet]
         public IActionResult UserBook()
         {
