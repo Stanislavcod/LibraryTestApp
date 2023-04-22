@@ -97,9 +97,19 @@ namespace Library.BusinessLogic.Services.Implementations
             try
             {
                 var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+                if (user != null)
+                {
+                    var userBooks = _context.Book.Where(b => b.UserId == userId);
+                    foreach (var book in userBooks)
+                    {
+                        book.UserId = null;
+                        _context.Book.Update(book);
+                    }
 
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                    _context.Users.Remove(user);
+
+                    _context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

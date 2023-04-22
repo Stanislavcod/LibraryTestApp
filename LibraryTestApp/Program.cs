@@ -1,3 +1,5 @@
+using Library.BusinessLogic.Services.Contracts;
+using Library.Common.ModelsDto;
 using LibraryTestApp.ConfigurationHelper;
 using Serilog;
 using System.Reflection;
@@ -21,6 +23,10 @@ builder.Logging.AddSerilog();
 ConfigurationHelper.ConfigurationServices(builder.Services, configure);
 
 var app = builder.Build();
+
+//var authService = app.Services.CreateScope().ServiceProvider.GetRequiredService<IAuthService>();
+//var admin = new UserDto { Login = "admin", Password = "admin" };
+//authService.RegisterAdmin(admin);
 
 ConfigurationHelper.Configure(app);
 

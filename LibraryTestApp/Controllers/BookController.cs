@@ -1,5 +1,4 @@
 ﻿using Library.BusinessLogic.Services.Contracts;
-using Library.BusinessLogic.Services.Implementations;
 using Library.Model.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +20,7 @@ namespace LibraryTestApp.Controllers
         {
             return View(_bookService.GetAll());
         }
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult UserBook()
         {
             try
@@ -36,7 +35,7 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles ="Admin")]
         public ActionResult CreateBook([FromForm] Book book)
         {
             try
@@ -55,7 +54,7 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles ="Admin")]
         public ActionResult EditBook([FromForm] Book book)
         {
             try
@@ -74,7 +73,7 @@ namespace LibraryTestApp.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin,User")]
         public IActionResult AddUserBook(int bookId)
         {
             var user = _userService.Get(User.Identity.Name);
@@ -84,7 +83,7 @@ namespace LibraryTestApp.Controllers
             return RedirectToAction("UserBook");
         }
 
-        [HttpDelete()]
+        [HttpDelete, Authorize(Roles = "Admin")]
         public ActionResult Delete([FromForm]int id)
         {
             try

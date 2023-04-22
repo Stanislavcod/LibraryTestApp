@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryTestApp.Controllers
 {
@@ -45,7 +46,8 @@ namespace LibraryTestApp.Controllers
 
             return RedirectToAction("Index", "Book");
         }
-        [HttpGet("logout")]
+        
+        [HttpPost("logout"), Authorize]
         public IActionResult Logout()
         {
             var httpContext = _httpContextAccessor.HttpContext;
