@@ -73,7 +73,7 @@ namespace LibraryTestApp.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost, Authorize(Roles = "Admin,User")]
+        [HttpPost, Authorize]
         public IActionResult AddUserBook(int bookId)
         {
             var user = _userService.Get(User.Identity.Name);

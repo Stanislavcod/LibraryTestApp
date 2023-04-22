@@ -12,7 +12,7 @@ namespace LibraryTestApp.Controllers
         {
             _userService = userService;
         }
-        [HttpGet("GetUsers"), Authorize(Roles = "Admin")]
+        [HttpGet("Users"), Authorize]
         public IActionResult GetUsers()
         {
             var users = _userService.Get();

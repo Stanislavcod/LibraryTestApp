@@ -66,7 +66,10 @@
                             </form>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="User" asp-action="Profile" id="profile-btn">Профиль</a>
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#profileModal">Профиль</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Users">Пользователи</a>
                         </li>
                     }
                 </ul>
@@ -82,6 +85,39 @@
             <span>© 2023 Библиотека. Все права защищены.</span>
         </div>
     </footer>
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Редактирование профиля</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="loginInput">Логин</label>
+                            <input type="text" class="form-control" id="loginInput" placeholder="Введите логин">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInput">Пароль</label>
+                            <input type="password" class="form-control" id="passwordInput" placeholder="Введите пароль">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailInput">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="Введите email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
