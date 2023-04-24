@@ -1,0 +1,52 @@
+﻿@using Library.Model.Models
+@model IEnumerable<Book>
+
+@{
+    ViewData["Title"] = "Библиотека";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Поиск книг</h1>
+
+<form method="get" action="@Url.Action("Search")">
+    <div class="form-group">
+        <label for="authorInput">Автор</label>
+        <input type="text" class="form-control" id="authorInput" name="author" placeholder="Введите имя автора">
+    </div>
+    <div class="form-group">
+        <label for="titleInput">Название</label>
+        <input type="text" class="form-control" id="titleInput" name="title" placeholder="Введите название книги">
+    </div>
+    <div class="form-group">
+        <label for="dateInput">Дата выхода</label>
+        <input type="date" class="form-control" id="dateInput" name="date">
+    </div>
+    <div class="form-group">
+        <label for="multiInput">По нескольким параметрам</label>
+        <input type="checkbox" id="multiInput" name="multi">
+    </div>
+    <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>Дата выхода</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Name</td>
+                    <td>@book.Author</td>
+                    <td>@book.Release.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

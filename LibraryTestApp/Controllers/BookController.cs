@@ -35,7 +35,7 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles ="Admin")]
+        [HttpPost, Authorize(Roles = "Admin")]
         public ActionResult CreateBook([FromForm] Book book)
         {
             try
@@ -54,7 +54,7 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [HttpPut, Authorize(Roles ="Admin")]
+        [HttpPut, Authorize(Roles = "Admin")]
         public ActionResult EditBook([FromForm] Book book)
         {
             try
@@ -84,7 +84,7 @@ namespace LibraryTestApp.Controllers
         }
 
         [HttpDelete, Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromForm]int id)
+        public ActionResult Delete([FromForm] int id)
         {
             try
             {
@@ -97,6 +97,20 @@ namespace LibraryTestApp.Controllers
             catch
             {
                 return BadRequest();
+            }
+        }
+        public IActionResult Search(string author, string title, DateTime? date, bool multi)
+        {
+            try
+            {
+                var filterBook = _bookService.Search(author,title,date,multi);
+
+                return View(filterBook);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

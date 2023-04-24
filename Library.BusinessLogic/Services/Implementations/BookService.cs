@@ -164,5 +164,43 @@ namespace Library.BusinessLogic.Services.Implementations
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
             }
         }
+        public IEnumerable<Book> Search(string author, string title, DateTime? date, bool multi)
+        {
+            try
+            {
+                var books = _context.Book.AsQueryable();
+
+                if (!string.IsNullOrEmpty(author))
+                {
+                    books = books.Where(b => b.Author.Contains(author));
+                }
+
+                if (!string.IsNullOrEmpty(title))
+                {
+                    books = books.Where(b => b.Name.Contains(title));
+                }
+
+                if (date.HasValue)
+                {
+                    books = books.Where(b => b.Release == date.Value);
+                }
+
+                if (multi)
+                {
+                    books = books.Where(b =>
+                        (!string.IsNullOrEmpty(author) && b.Author.Contains(author)) ||
+                        (!string.IsNullOrEmpty(title) && b.Name.Contains(title)) ||
+                        (date.HasValue && b.Release == date.Value)
+                    );
+                }
+                return books;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{DateTime.Now}: {ex.Message}");
+
+                return Enumerable.Empty<Book>();
+            }
+        }
     }
 }
