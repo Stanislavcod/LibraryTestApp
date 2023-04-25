@@ -22,13 +22,13 @@ namespace LibraryTestApp.Controllers
         public IActionResult EditUser([FromForm] UserDto request, [FromForm] string password)
         {
             _userService.Edit(request, password);
-            return RedirectToAction("GetUsers", "Users");
+            return RedirectToAction("AllUsers");
         }
-        [HttpDelete("DeleteUser"), Authorize(Roles = "Admin")]
-        public IActionResult DeleteUser([FromForm] int id)
+        [HttpPost, Authorize(Roles = "Admin")]
+        public IActionResult DeleteUser(int id)
         {
             _userService.Delete(id);
-            return RedirectToAction("GetUsers", "Users");
+            return RedirectToAction("AllUsers");
         }
         [HttpPost("EditPassword"), Authorize(Roles = "Admin,User")]
         public IActionResult EditPassword(EditPasswordDto request)

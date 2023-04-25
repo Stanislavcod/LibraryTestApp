@@ -32,9 +32,12 @@
 						<td>Пользователь</td>
 					}
 					<td>
-						<!-- Кнопки для изменения и удаления предмета -->
+						<!-- Кнопки для изменения и удаления пользователя -->
 						<button class="btn btn-primary" data-toggle="modal" data-target="#editModal-@user.Id">Изменить</button>
-						<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-@user.Id">Удалить</button>
+						<form method="post" action="@Url.Action("DeleteUser", "User")">
+							<input type="hidden" name="id" value="@user.Id" />
+							<button type="submit" class="btn btn-primary">Удалить</button>
+						</form>
 					</td>
 				</tr>
 				<!-- Модальное окно для изменения пользователя -->
@@ -76,29 +79,6 @@
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
 										<button type="submit" class="btn btn-primary">Сохранить изменения</button>
 									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Модальное окно для подтверждения удаления пользователя -->
-				<div class="modal fade" id="deleteModal-@user.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-@user.Id" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="deleteModalLabel-@user.Id">Удаление пользователя: @user.Login</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								Вы уверены, что хотите удалить пользователя @user.Login?
-							</div>
-							<div class="modal-footer">
-								<form method="post" action="@Url.Action("DeleteUser", "User")">
-									<input type="hidden" value="@user.Id" name="userId" />
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-									<button type="submit" class="btn btn-danger">Удалить</button>
 								</form>
 							</div>
 						</div>
