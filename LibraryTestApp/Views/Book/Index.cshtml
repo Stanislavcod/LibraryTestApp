@@ -25,10 +25,7 @@
                         {
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal-@book.Id">Создать</button>
-                                <form id="editForm-@book.Id" method="post" action="@Url.Action("EditBook", "Book")">
-                                    <input type="hidden" name="bookId" value="@book.Id" />
-                                    <button type="submit" class="btn btn-primary">Изменить</button>
-                                </form>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#editModal-@book.Id">Изменить</button>
                                 <form method="post" action="@Url.Action("DeleteBook", "Book")">
                                     <input type="hidden" name="id" value="@book.Id" />
                                     <button type="submit" class="btn btn-primary">Удалить</button>
@@ -53,7 +50,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form id="editForm-@book.Id" method="post" action="@Url.Action("EditBook", "Book")">
-                                        <input type="hidden" name="bookId" value="@book.Id" />
+                                        <input type="hidden" name="id" value="@book.Id" />
                                         <div class="form-group">
                                             <label for="name">Название</label>
                                             <input type="text" class="form-control" id="name" name="name" value="@book.Name">

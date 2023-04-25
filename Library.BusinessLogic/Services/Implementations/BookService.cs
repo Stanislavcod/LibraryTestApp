@@ -136,12 +136,12 @@ namespace Library.BusinessLogic.Services.Implementations
         {
             try
             {
-                var currentbook = _context.Book.Find(book.Id);
+                var currentBook = _context.Book.Find(book.Id);
 
-                if(currentbook == null)
+                if(currentBook == null)
                     throw new Exception("Книга не найдена");
 
-                _context.Book.Update(book);
+                _context.Entry(currentBook).CurrentValues.SetValues(book);
                 _context.SaveChanges();
             }
             catch (Exception ex)
