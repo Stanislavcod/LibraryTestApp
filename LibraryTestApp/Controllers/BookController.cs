@@ -87,6 +87,7 @@ namespace LibraryTestApp.Controllers
 
             return RedirectToAction("Index");
         }
+        [Authorize]
         public IActionResult Search(string author, string title, DateTime? date, bool multi)
         {
             try

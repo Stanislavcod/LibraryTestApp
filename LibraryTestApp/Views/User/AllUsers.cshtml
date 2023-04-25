@@ -64,11 +64,11 @@
 									<div class="form-group">
 										<label for="role-@user.Id">Роль</label>
 										<select class="form-control" id="role-@user.Id" name="RoleId">
-											<option value="1" @if (user.RoleId == 2)
+											<option value="1" @if (user.RoleId == 1)
 											{
 												<text>selected</text>
 											}>Администратор</option>
-											<option value="2" @if (user.RoleId == 1)
+											<option value="2" @if (user.RoleId == 2)
 											{
 												<text>selected</text>
 											}>Пользователь</option>

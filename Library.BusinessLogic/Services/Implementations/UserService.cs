@@ -3,7 +3,6 @@ using Library.Common.Helpers.Cryptography;
 using Library.Common.ModelsDto;
 using Library.Model.DatabaseContext;
 using Library.Model.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Library.BusinessLogic.Services.Implementations

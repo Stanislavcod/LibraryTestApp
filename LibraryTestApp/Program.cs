@@ -1,5 +1,3 @@
-using Library.BusinessLogic.Services.Contracts;
-using Library.Common.ModelsDto;
 using LibraryTestApp.ConfigurationHelper;
 using Serilog;
 using System.Reflection;

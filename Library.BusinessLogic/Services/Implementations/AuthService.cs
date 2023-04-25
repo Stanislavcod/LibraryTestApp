@@ -1,13 +1,10 @@
-﻿using Azure.Core;
-using Library.BusinessLogic.Services.Contracts;
+﻿using Library.BusinessLogic.Services.Contracts;
 using Library.Common.Helpers.Cryptography;
 using Library.Common.ModelsDto;
 using Library.Model.DatabaseContext;
 using Library.Model.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 
 namespace Library.BusinessLogic.Services.Implementations
 {
