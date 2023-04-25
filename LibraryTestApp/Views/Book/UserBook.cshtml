@@ -19,7 +19,10 @@
                         <p class="card-text">Автор: @book.Author </p>
                         <p class="card-text">Жанр: @book.Genre</p>
                         <p class="card-text">Дата: @book.Release.Date</p>
-                        <a href="#" class="btn btn-primary">Удалить</a>
+                        <form method="post" action="@Url.Action("DeleteUserBook", "Book")">
+                            <input type="hidden" name="bookId" value="@book.Id" />
+                            <button type="submit" class="btn btn-primary">Удалить</button>
+                        </form>
                     </div>
                 </div>
             }

@@ -14,5 +14,6 @@ namespace Library.BusinessLogic.Services.Contracts
         void Edit(Book book, Stream fileStream);
         void Delete(int id);
         public IEnumerable<Book> Search(string author, string title, DateTime? date, bool multi);
+        public void DeleteUserBook(int bookId);
     }
 }

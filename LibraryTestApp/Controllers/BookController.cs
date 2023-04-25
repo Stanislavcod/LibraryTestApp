@@ -82,6 +82,13 @@ namespace LibraryTestApp.Controllers
 
             return RedirectToAction("UserBook");
         }
+        [HttpPost, Authorize]
+        public IActionResult DeleteUserBook(int bookId)
+        {
+            _bookService.DeleteUserBook(bookId);
+
+            return RedirectToAction("UserBook");
+        }
 
         [HttpDelete, Authorize(Roles = "Admin")]
         public ActionResult Delete([FromForm] int id)

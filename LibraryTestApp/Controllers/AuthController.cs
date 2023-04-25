@@ -6,6 +6,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Library.BusinessLogic.Services.Implementations;
+using Library.Model.Models;
+using Library.Model.DatabaseContext;
 
 namespace LibraryTestApp.Controllers
 {
@@ -13,10 +15,12 @@ namespace LibraryTestApp.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthController(IAuthService authService, IHttpContextAccessor httpContextAccessor)
+        private readonly ApplicationDatabaseContext _context;
+        public AuthController(IAuthService authService, IHttpContextAccessor httpContextAccessor, ApplicationDatabaseContext context)
         {
             _authService = authService;
             _httpContextAccessor = httpContextAccessor;
+            _context = context;
         }
         [HttpGet("register")]
         public IActionResult Register()
@@ -39,9 +43,13 @@ namespace LibraryTestApp.Controllers
         {
             try
             {
+                var user = _context.Users.FirstOrDefault(u=> u.Login == request.Login);
+
+                _authService.Login(request);
+
                 var httpContext = _httpContextAccessor.HttpContext;
 
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name, request.Login) };
+                var claims = new List<Claim> { new Claim(ClaimTypes.Name, request.Login), new Claim(ClaimTypes.Role, user.Role.Name) };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 

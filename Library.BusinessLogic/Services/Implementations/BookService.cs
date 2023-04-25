@@ -82,6 +82,19 @@ namespace Library.BusinessLogic.Services.Implementations
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
             }
         }
+        public void DeleteUserBook(int bookId)
+        {
+            try
+            {
+                var book = _context.Book.Find(bookId);
+                book.UserId = null;
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{DateTime.Now}: {ex.Message}");
+            }
+        }
         public Book GetByName(string name)
         {
             try

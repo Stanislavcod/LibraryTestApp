@@ -1,10 +1,13 @@
-﻿using Library.BusinessLogic.Services.Contracts;
+﻿using Azure.Core;
+using Library.BusinessLogic.Services.Contracts;
 using Library.Common.Helpers.Cryptography;
 using Library.Common.ModelsDto;
 using Library.Model.DatabaseContext;
 using Library.Model.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Library.BusinessLogic.Services.Implementations
 {
@@ -75,10 +78,11 @@ namespace Library.BusinessLogic.Services.Implementations
         }
         public void Login(UserDto userDto)
         {
+
             var user = _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == userDto.Login);
             if (user == null)
                 throw new Exception("Пользователь не найден");
-            if (PasswordHasher.VerifyPasswordHash(user.PasswordSalt, user.PasswordHash, userDto.Password))
+            if (!PasswordHasher.VerifyPasswordHash(user.PasswordSalt, user.PasswordHash, userDto.Password))
                 throw new Exception("Неверный пароль!");
         }
     }

@@ -21,13 +21,16 @@
                         <p class="card-text">Автор: @book.Author </p>
                         <p class="card-text">Жанр: @book.Genre</p>
                         <p class="card-text">Дата: @book.Release.Date</p>
-                        <div class="btn-group" role="group">
-                            <a href="@Url.Action("Create", "Book", new { id = book.Id })" class="btn btn-success">Создать</a>
-                            <a href="@Url.Action("Edit", "Book", new { id = book.Id })" class="btn btn-warning">Изменить</a>
-                            <form method="post" action="@Url.Action("Delete", "Book", new { id = book.Id })">
-                                <button type="submit" class="btn btn-danger">Удалить</button>
-                            </form>
-                        </div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="btn-group" role="group">
+                                <a href="@Url.Action("Create", "Book", new { id = book.Id })" class="btn btn-success">Создать</a>
+                                <a href="@Url.Action("Edit", "Book", new { id = book.Id })" class="btn btn-warning">Изменить</a>
+                                <form method="post" action="@Url.Action("Delete", "Book", new { id = book.Id })">
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </div>
+                        }
                         <form method="post" action="@Url.Action("AddUserBook", "Book")">
                             <input type="hidden" name="bookId" value="@book.Id" />
                             <button type="submit" class="btn btn-primary">Взять в аренду</button>
