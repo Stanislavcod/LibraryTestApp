@@ -24,7 +24,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal-@book.Id">Создать</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Создать</button>
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#editModal-@book.Id">Изменить</button>
                                 <form method="post" action="@Url.Action("DeleteBook", "Book")">
                                     <input type="hidden" name="id" value="@book.Id" />
@@ -76,6 +76,47 @@
                             </div>
                         </div>
                     </div>
+                <!-- Модальное окно для создания книги -->
+                <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createModalLabel">Создание книги</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createForm" method="post" action="@Url.Action("CreateBook", "Book")">
+                                    <div class="form-group">
+                                        <label for="name">Название</label>
+                                        <input type="text" class="form-control" id="name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="author">Автор</label>
+                                        <input type="text" class="form-control" id="author" name="author">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="genre">Жанр</label>
+                                        <input type="text" class="form-control" id="genre" name="genre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="releaseDate">Дата</label>
+                                        <input type="date" class="form-control" id="releaseDate" name="releaseDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="file">Файл</label>
+                                        <input type="file" class="form-control-file" id="file" name="file">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                <button type="submit" form="createForm" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     </div>

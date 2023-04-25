@@ -5,7 +5,7 @@ namespace Library.BusinessLogic.Services.Contracts
 {
     public interface IBookService
     {
-        void Create(Book book, Stream fileStream);
+        void Create(Book book);
         IEnumerable<Book> GetAll();
         IEnumerable<Book> GetUserBook(string userName);
         void AddUserBook(int bookId, int userId);

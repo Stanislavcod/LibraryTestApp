@@ -40,11 +40,7 @@ namespace LibraryTestApp.Controllers
         {
             try
             {
-                var file = Request.Form.Files.FirstOrDefault();
-                using (var fileStream = file.OpenReadStream())
-                {
-                    _bookService.Create(book, fileStream);
-                }
+                _bookService.Create(book);
 
                 return RedirectToAction("Index");
             }
