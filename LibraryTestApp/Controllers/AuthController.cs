@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Library.BusinessLogic.Services.Implementations;
 
 namespace LibraryTestApp.Controllers
 {
@@ -36,15 +37,22 @@ namespace LibraryTestApp.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromForm] UserDto request)
         {
-            var httpContext = _httpContextAccessor.HttpContext;
+            try
+            {
+                var httpContext = _httpContextAccessor.HttpContext;
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, request.Login) };
+                var claims = new List<Claim> { new Claim(ClaimTypes.Name, request.Login) };
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
-            httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Book");
+                return RedirectToAction("Index", "Book");
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         
         [HttpPost("logout"), Authorize]

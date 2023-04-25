@@ -12,13 +12,13 @@ namespace LibraryTestApp.Controllers
         {
             _userService = userService;
         }
-        [HttpGet("Users"), Authorize]
-        public IActionResult GetUsers()
+        [HttpGet("AllUsers"), Authorize]
+        public IActionResult AllUsers()
         {
             var users = _userService.Get();
             return View(users);
         }
-        [HttpPost("EditUser"), Authorize(Roles = "Admin,User")]
+        [HttpPost("EditUser"), Authorize]
         public IActionResult EditUser([FromForm] UserDto request, [FromForm] string password)
         {
             _userService.Edit(request, password);

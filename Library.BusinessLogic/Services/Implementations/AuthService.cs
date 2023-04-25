@@ -40,7 +40,7 @@ namespace Library.BusinessLogic.Services.Implementations
                 {
                     Login = newUser.Login,
                     Email = newUser.Email,
-                    RoleId = 2,
+                    RoleId = 1,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
                 };
@@ -67,7 +67,7 @@ namespace Library.BusinessLogic.Services.Implementations
                 Email = userDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                RoleId = 1
+                RoleId = 2
             };
 
             _context.Users.Add(admin);

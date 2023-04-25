@@ -68,9 +68,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-toggle="modal" data-target="#profileModal">Профиль</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="Users">Пользователи</a>
-                        </li>
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="User" asp-action="AllUsers">Пользователи</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <form class="form-inline my-2 my-lg-0" asp-controller="Book" asp-action="Search">
                                 <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
@@ -85,7 +88,6 @@
     <div class="container py-4">
         @RenderBody()
     </div>
-
     <footer class="footer">
         <div class="container">
             <span>© 2023 Библиотека. Все права защищены.</span>
@@ -102,7 +104,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="post">
                         <div class="form-group">
                             <label for="loginInput">Логин</label>
                             <input type="text" class="form-control" id="loginInput" placeholder="Введите логин">
@@ -119,7 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Сохранить</button>
+                    <a class="nav-link" asp-controller="User" asp-action="EditUser">Сохранить</a>
                 </div>
             </div>
         </div>

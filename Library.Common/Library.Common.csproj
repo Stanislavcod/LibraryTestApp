@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Contacts\" />
+    <Folder Include="Seeds\" />
+  </ItemGroup>
+
 </Project>

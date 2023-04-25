@@ -25,7 +25,7 @@ ConfigurationHelper.ConfigurationServices(builder.Services, configure);
 var app = builder.Build();
 
 //var authService = app.Services.CreateScope().ServiceProvider.GetRequiredService<IAuthService>();
-//var admin = new UserDto { Login = "admin", Password = "admin" };
+//var admin = new UserDto { Login = "admin", Password = "admin", RoleId = 2 };
 //authService.RegisterAdmin(admin);
 
 ConfigurationHelper.Configure(app);

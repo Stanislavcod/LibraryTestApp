@@ -15,17 +15,24 @@
             @foreach (var book in Model)
             {
                 <div class="card">
-                    <form method="post" action="@Url.Action("AddUserBook", "Book")">
-                        <img src="@((book.Photo != null) ? Url.Content($"~/{book.Photo}") : Url.Content("~/images/stack-of-books-in-ho.jpg"))" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Название: @book.Name</h5>
-                            <p class="card-text">Автор: @book.Author </p>
-                            <p class="card-text">Жанр: @book.Genre</p>
-                            <p class="card-text">Дата: @book.Release.Date</p>
+                    <img src="@((book.Photo != null) ? Url.Content($"~/{book.Photo}") : Url.Content("~/images/stack-of-books-in-ho.jpg"))" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Название: @book.Name</h5>
+                        <p class="card-text">Автор: @book.Author </p>
+                        <p class="card-text">Жанр: @book.Genre</p>
+                        <p class="card-text">Дата: @book.Release.Date</p>
+                        <div class="btn-group" role="group">
+                            <a href="@Url.Action("Create", "Book", new { id = book.Id })" class="btn btn-success">Создать</a>
+                            <a href="@Url.Action("Edit", "Book", new { id = book.Id })" class="btn btn-warning">Изменить</a>
+                            <form method="post" action="@Url.Action("Delete", "Book", new { id = book.Id })">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
+                        <form method="post" action="@Url.Action("AddUserBook", "Book")">
                             <input type="hidden" name="bookId" value="@book.Id" />
                             <button type="submit" class="btn btn-primary">Взять в аренду</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             }
         </div>

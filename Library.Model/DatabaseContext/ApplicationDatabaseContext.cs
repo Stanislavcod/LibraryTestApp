@@ -1,6 +1,4 @@
-﻿using Library.Common.Contacts;
-using Library.Common.Seeds;
-using Library.Model.Models;
+﻿using Library.Model.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Model.DatabaseContext
@@ -20,14 +18,12 @@ namespace Library.Model.DatabaseContext
                 new Role
                 {
                     Id = 1,
-                    Name = RoleType.User,
-                    NormalName = RoleDescription.Get(RoleType.User)
+                    Name = "User",
                 },
                 new Role
                 {
                     Id = 2,
-                    Name = RoleType.Admin,
-                    NormalName = RoleDescription.Get(RoleType.Admin)
+                    Name = "Admin",
                 });
             modelBuilder.Entity<Book>().HasData(
                 new Book
