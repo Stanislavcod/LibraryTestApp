@@ -55,7 +55,7 @@
 								<form form method="post" action="@Url.Action("EditUser", "User")">
 									<div class="form-group">
 										<label for="name-@user.Id">Логин</label>
-										<input type="text" class="form-control" id="name-@user.Id" value="@user.Login" name="Username">
+										<input type="text" class="form-control" id="name-@user.Id" value="@user.Login" name="Login">
 									</div>
 									<div class="form-group">
 										<label for="name-@user.Id">Пароль</label>
@@ -64,11 +64,11 @@
 									<div class="form-group">
 										<label for="role-@user.Id">Роль</label>
 										<select class="form-control" id="role-@user.Id" name="RoleId">
-											<option value="1" @if (user.RoleId == 1)
+											<option value="1" @if (user.RoleId == 2)
 											{
 												<text>selected</text>
 											}>Администратор</option>
-											<option value="2" @if (user.RoleId == 2)
+											<option value="2" @if (user.RoleId == 1)
 											{
 												<text>selected</text>
 											}>Пользователь</option>

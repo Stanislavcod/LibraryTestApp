@@ -51,7 +51,7 @@ namespace Library.BusinessLogic.Services.Implementations
 
                 if (!string.Equals(user.Login, request.Login, StringComparison.OrdinalIgnoreCase))
                 {
-                    var existingUser = _context.Users.FirstOrDefaultAsync(u => u.Login == request.Login);
+                    var existingUser = _context.Users.FirstOrDefault(u => u.Login == request.Login);
                     if (existingUser != null)
                         throw new Exception("Пользователь с таким именем уже существует");
                     user.Login = request.Login;
@@ -75,7 +75,7 @@ namespace Library.BusinessLogic.Services.Implementations
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
             }
         }
-        public void EditPassword(User user, string password, string newPassword)
+        public async void EditPassword(User user, string password, string newPassword)
         {
             try
             {
