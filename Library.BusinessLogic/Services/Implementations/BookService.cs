@@ -132,7 +132,7 @@ namespace Library.BusinessLogic.Services.Implementations
             }
         }
 
-        public void Edit(Book book, Stream fileStream)
+        public void Edit(Book book)
         {
             try
             {
@@ -140,15 +140,6 @@ namespace Library.BusinessLogic.Services.Implementations
 
                 if(currentbook == null)
                     throw new Exception("Книга не найдена");
-
-                if (fileStream != null && fileStream.Length > 0)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        fileStream.CopyToAsync(memoryStream);
-                        book.Photo = memoryStream.ToArray();
-                    }
-                }
 
                 _context.Book.Update(book);
                 _context.SaveChanges();
@@ -158,12 +149,11 @@ namespace Library.BusinessLogic.Services.Implementations
                 _logger.LogError($"{DateTime.Now}: {ex.Message}");
             }
         }
-
         public void Delete(int id)
         {
             try
             {
-                var book = _context.Book.FirstOrDefault(book => book.Id == id);
+                var book = _context.Book.Find(id);
 
                 if (book == null)
                     throw new Exception("Книга не найдена");

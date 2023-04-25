@@ -15,7 +15,7 @@
             @foreach (var book in Model)
             {
                 <div class="card">
-                    <img src="@((book.Photo != null) ? Url.Content($"~/{book.Photo}") : Url.Content("~/images/stack-of-books-in-ho.jpg"))" class="card-img-top">
+                    <img src="@((book.Photo != null) ? Url.Content($"/{book.Photo}") : Url.Content("/images/stack-of-books-in-ho.jpg"))" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">Название: @book.Name</h5>
                         <p class="card-text">Автор: @book.Author </p>
@@ -24,10 +24,14 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="btn-group" role="group">
-                                <a href="@Url.Action("Create", "Book", new { id = book.Id })" class="btn btn-success">Создать</a>
-                                <a href="@Url.Action("Edit", "Book", new { id = book.Id })" class="btn btn-warning">Изменить</a>
-                                <form method="post" action="@Url.Action("Delete", "Book", new { id = book.Id })">
-                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal-@book.Id">Создать</button>
+                                <form id="editForm-@book.Id" method="post" action="@Url.Action("EditBook", "Book")">
+                                    <input type="hidden" name="bookId" value="@book.Id" />
+                                    <button type="submit" class="btn btn-primary">Изменить</button>
+                                </form>
+                                <form method="post" action="@Url.Action("DeleteBook", "Book")">
+                                    <input type="hidden" name="id" value="@book.Id" />
+                                    <button type="submit" class="btn btn-primary">Удалить</button>
                                 </form>
                             </div>
                         }
@@ -37,7 +41,46 @@
                         </form>
                     </div>
                 </div>
+                <!-- Модальное окно для редактирования книги -->
+                    <div class="modal fade" id="editModal-@book.Id" tabindex="-1" role="dialog" aria-labelledby="editModal-@book.Id-Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModal-@book.Id-Label">Редактирование книги: @book.Name</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editForm-@book.Id" method="post" action="@Url.Action("EditBook", "Book")">
+                                        <input type="hidden" name="bookId" value="@book.Id" />
+                                        <div class="form-group">
+                                            <label for="name">Название</label>
+                                            <input type="text" class="form-control" id="name" name="name" value="@book.Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="author">Автор</label>
+                                            <input type="text" class="form-control" id="author" name="author" value="@book.Author">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="genre">Жанр</label>
+                                            <input type="text" class="form-control" id="genre" name="genre" value="@book.Genre">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="releaseDate">Дата</label>
+                                            <input type="date" class="form-control" id="releaseDate" name="releaseDate" value="@book.Release.Date.ToString("yyyy-MM-dd")">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                    <button type="submit" form="editForm-@book.Id" class="btn btn-primary">Сохранить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             }
         </div>
     </div>
 </div>
+

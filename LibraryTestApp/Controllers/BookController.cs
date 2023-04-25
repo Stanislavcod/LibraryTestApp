@@ -46,7 +46,7 @@ namespace LibraryTestApp.Controllers
                     _bookService.Create(book, fileStream);
                 }
 
-                return RedirectToAction("Index", "Books");
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -54,19 +54,13 @@ namespace LibraryTestApp.Controllers
             }
         }
 
-        [HttpPut, Authorize(Roles = "Admin")]
+        [HttpPost, Authorize(Roles = "Admin")]
         public ActionResult EditBook([FromForm] Book book)
         {
             try
             {
-                var file = Request.Form.Files.FirstOrDefault();
-                using (var fileStream = file.OpenReadStream())
-                {
-                    _bookService.Edit(book, fileStream);
-                }
-                return HttpContext.Request.Headers["Referer"].ToString().Contains("Index") ?
-        RedirectToAction("Index", "Books") :
-        Redirect(HttpContext.Request.Headers["Referer"].ToString());
+                _bookService.Edit(book);
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -90,27 +84,18 @@ namespace LibraryTestApp.Controllers
             return RedirectToAction("UserBook");
         }
 
-        [HttpDelete, Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromForm] int id)
+        [HttpPost, Authorize(Roles = "Admin")]
+        public IActionResult DeleteBook(int id)
         {
-            try
-            {
-                _bookService.Delete(id);
+            _bookService.Delete(id);
 
-                return HttpContext.Request.Headers["Referer"].ToString().Contains("Index") ?
-        RedirectToAction("Index", "Books") :
-        Redirect(HttpContext.Request.Headers["Referer"].ToString());
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            return RedirectToAction("Index");
         }
         public IActionResult Search(string author, string title, DateTime? date, bool multi)
         {
             try
             {
-                var filterBook = _bookService.Search(author,title,date,multi);
+                var filterBook = _bookService.Search(author, title, date, multi);
 
                 return View(filterBook);
 
